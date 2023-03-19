@@ -1,40 +1,121 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import "./App.css";
-// Public key 6992916dd45bd2af5b02b1e8ae33fb73
-// Private key a150923d2e911e223edae62166edfee419045908
-// http://gateway.marvel.com/v1/public/comics?ts=1&apikey=1234&hash=ffd275c5130566a2916217b101f26150
-// 18/03/2023, 13:21:02a150923d2e911e223edae62166edfee4190459086992916dd45bd2af5b02b1e8ae33fb73
-// hash 738cea2f374b3b032733f370770c74a8
+import { useState } from "react";
+import { useEffect } from "react";
+import FlipableCard from "./Components/flipping-card";
 
-// '18/03/2023, 13:21:02' 18/03/2023, 13:21:02
-const getData = async()=>{
-    fetch('http://gateway.marvel.com/v1/public/comics?ts=18/03/2023, 13:21:02&apikey=6992916dd45bd2af5b02b1e8ae33fb73&hash=b9c4435b7ff3377af0dfb90e9bff383d', {method: 'GET'})
-    .then(response => response.json())
-    .then(response => console.log(response.data.results))
-}
-  
-// const getInfo = () =>{
-//     const [posts, setPosts] = useState([]);
-//    useEffect(() => {
-//       fetch('https://go-apod.herokuapp.com/apod')
-//          .then((response) => response.json())
-//          .then((data) => {
-//             console.log(data);
-//             setPosts(data);
-//          })
-//          .catch((err) => {
-//             console.log(err.message);
-//          });
-//    }, []);
+// const Cards = ({datas}) =>{
+//   const [list, setList] = useState([]);
+
+//   useEffect(() => {
+//     setTimeout(() => {
+//       const newList = datas.values.data.map((value) => (
+//         <Card name={value.name} img={value.imageUrl} />
+//       ));
+//       setList(newList);
+//     }, 1000);
+//   }, []);
+
+//   return <ul id="list-li">{list}</ul>;
 // }
+// const Cards = ({datas}) =>{
+//     console.log(datas)
+//     return (
+//         <div>
+//            <ul id="list-li">
+//             {
+//                 setTimeout(() => {
+//                     const list = datas.values.data.map((value) =>(
+//                         <Card name={value.name} img = {value.imageUrl}/>
+//                     ))
+                    
+//                 }, 1000)
+//             }
+//             </ul> 
+//         </div>
+//     )
+// }
+
+// const Cards = ({ datas }) => {
+//     const [cards, setCards] = React.useState([]); // create state to hold the cards
+  
+//     React.useEffect(() => {
+//       setTimeout(() => {
+//         const list = datas.values.data.map((value) => (
+//           <Card name={value.name} img={value.imageUrl} />
+//         ));
+//         setCards(list); // set the state with the list of cards
+//       }, 1000);
+//     }, [datas.values.data]); // add datas.values.data as dependency to the useEffect
+  
+//     return (
+//       <div>
+//         <ul id="list-li">{cards}</ul> {/* render the cards state */}
+//       </div>
+//     );
+//   };
+const Cards = ({ datas }) => {
+    const [cards, setCards] = React.useState([]);
+  
+    React.useEffect(() => {
+      setTimeout(() => {
+        const list = datas.values.data.map((value) => (
+          <div>
+            <p>{value.id}</p>
+            <p>{value.name}</p>
+            <img src = {value.imageUrl}/>
+            
+          </div>
+        ));
+        setCards(list);
+      }, 1000);
+    }, []);
+  
+    return (
+      <div>
+        <ul id="list-li">{cards.map((card, index) => 
+        <li 
+        key={index} 
+        style={{
+          
+        }}>{card}</li>)}</ul>
+      </div>
+    );
+  };
+  const Card = (name, img) => {
+    return(
+      <div>
+        {name}
+        <img src = {img} ></img>
+      </div>
+    )
+}
+const UseFetch = (url) =>{
+    var [data] = useState({values:null})
+    useEffect(() =>{
+        getData(url)
+    },[url])
+    async function getData(url){
+        try {
+            const response = await fetch(url)
+            const values = await response.json()
+            data.values = values
+        } catch (e) {
+            console.log("Couldn't connect with api")
+            
+        }
+    }
+    return data
+}
 const App = () => {
-    useEffect(() => {
-        // fetch('http://gateway.marvel.com/v1/public/comics?ts=18/03/2023, 13:21:02&apikey=6992916dd45bd2af5b02b1e8ae33fb73&hash=b9c4435b7ff3377af0dfb90e9bff383d', {method: 'GET'})
-        // .then(response => response.json())
-        // .then(response => console.log(response.data.results))
-        fetch('https://api.disneyapi.dev/characters', {method: 'GET'}).then(response => response.json()).then(response => console.log(response.data))
-       }, []);
+    // var lis
+    const [url] = useState("https://api.disneyapi.dev/characters")
+    console.log(url)
+    var values = UseFetch(url)
+    const [data] = useState(values)
+    // This to print update
+    setTimeout(()=>{console.log(data)},1000);
+    // data = data.data
+    
   return (
     <div style={{
         background: `url("https://static.wikia.nocookie.net/4ef840a8-8212-48e9-8173-bed2d9501858") no-repeat center fixed`,
@@ -46,16 +127,8 @@ const App = () => {
         border: '2px solid yellow',
         backgroundSize: 'contain'
     }}>
-        <img 
-        style={{
-            gridArea: '0/0/1/1'
-            
-        }}
-        src = 'https://www.citypng.com/public/uploads/preview/dragon-ball-z-budokai-tenkaichi-3-logo-hd-png-11664328047dtxztxwsew.png'
-        >
-            
-        </img>
-        
+    <FlipableCard></FlipableCard>
+        <Cards datas={data}/>      
     </div>
   );
 };
