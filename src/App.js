@@ -55,39 +55,66 @@ import "./Components/Card.css"
 //       </div>
 //     );
 //   };
+function Card(value){
+  return(
+    <div className="flip-card">
+      <div className="flip-card-inner">
+        <div className="card-front"> 
+        
+        <img src = {value.imageUrl}/>
+          <h1>{value.name}</h1>
+          
+        </div>
+        <div className="card-back">
+        <h1>Disney</h1> 
+          <p>Architect & Engineer</p> 
+          <p>We love that guy</p>  
+        </div>
+      </div>
+    </div>
+  )
+}
+function Shuffle(value){
+  let temp = value.slice()
+  let temp2 = value.slice()
+  let arr = []
+  temp2.length = temp2.length*2
+  // console.log("\nTemp1:"+temp.length+"\nTemp2:"+temp2.length)
+  // for (let i = 0 ; i < 20; i++){
+  //   let j = Math.floor(Math.random() * (i + 1));
+  //   [temp[i], arr[j]] = [temp[j], temp[i]];
+  // }
+  for (let i = 0 ; i < 10 ; i++ ){
+    let j = Math.floor(Math.random() * temp.length);
+    arr[i]= temp[j]
+  }
+  let counter = 0;
+  for (let i = 0 ; i < 10 ; i++ ){
+    arr[i+25]= arr[counter];
+    counter++;
+   }
+ for (let i = 0 ; i < 5; i++){
+    let j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr
+}
 const Cards = ({ datas }) => {
     const [cards, setCards] = React.useState([]);
-  
     React.useEffect(() => {
       setTimeout(() => {
-        const list = datas.values.data.map((value) => (
-        <div className="flippable-card-container">
-          <div className="card">
-            <div className="card-front">
-              <h1>{value.name+":"}</h1>
-            <img src = {value.imageUrl} style={{}}/>
-            </div>
-            <div  className="card-back "></div>
-          </div>
-        </div>
-          // <div>
-            // <p>{value.id}</p>
-            // <p>{value.name}</p>
-            // <img src = {value.imageUrl}/>
-            
-          // </div>
-        ));
+        const shuffled_list = Shuffle(datas.values.data);
+        const list = shuffled_list.map((value) => Card(value));
         setCards(list);
       }, 1000);
     }, []);
-  
     return (
       <div style = {{
         width: '100%',
         height: '100%',
         display: 'grid',
         gridTemplateColumns: "auto auto auto auto auto",
-        gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto",
+        gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto",
         backgroundSize: 'contain'
       }}>
         {
@@ -98,14 +125,6 @@ const Cards = ({ datas }) => {
       </div>
     );
   };
-  const Card = (name, img) => {
-    return(
-      <div>
-        {name}
-        <img src = {img} ></img>
-      </div>
-    )
-}
 const UseFetch = (url) =>{
     var [data] = useState({values:null})
     useEffect(() =>{
