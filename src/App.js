@@ -2,6 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
 import FlipableCard from "./Components/flipping-card";
+import {CSSTransition} from 'react-transition-group';
+import "./Components/Card.css"
 
 // const Cards = ({datas}) =>{
 //   const [list, setList] = useState([]);
@@ -59,25 +61,41 @@ const Cards = ({ datas }) => {
     React.useEffect(() => {
       setTimeout(() => {
         const list = datas.values.data.map((value) => (
-          <div>
-            <p>{value.id}</p>
-            <p>{value.name}</p>
-            <img src = {value.imageUrl}/>
+        <div style={{
+          height: "400px",
+          width:"200px"
+        }}>
+            <h1>{value.name+":"}</h1>
+           <img src = {value.imageUrl} style={{}}/>
+        </div>
+          // <div>
+            // <p>{value.id}</p>
+            // <p>{value.name}</p>
+            // <img src = {value.imageUrl}/>
             
-          </div>
+          // </div>
         ));
         setCards(list);
       }, 1000);
     }, []);
   
     return (
-      <div>
-        <ul id="list-li">{cards.map((card, index) => 
-        <li 
-        key={index} 
-        style={{
-          
-        }}>{card}</li>)}</ul>
+      <div style = {{
+        width: '100%',
+        height: '100%',
+        display: 'grid',
+        gridTemplateColumns: "auto auto auto auto auto",
+        gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto",
+        backgroundSize: 'contain'
+      }}>
+        {
+        cards.map((card, index) =>
+        // console.log(index) 
+          <div style={{
+            gridRowStart:"0"+"/"+"0",
+          }}
+          key={index}>{card}</div>
+        )}
       </div>
     );
   };
@@ -118,7 +136,7 @@ const App = () => {
     
   return (
     <div style={{
-        background: `url("https://static.wikia.nocookie.net/4ef840a8-8212-48e9-8173-bed2d9501858") no-repeat center fixed`,
+        background: `url("https://i.etsystatic.com/10842635/r/il/6d88a8/3717710901/il_570xN.3717710901_4eg6.jpg") no-repeat center fixed`,
         width: '1280px',
         height: '630px',
         display: 'grid',
@@ -127,7 +145,6 @@ const App = () => {
         border: '2px solid yellow',
         backgroundSize: 'contain'
     }}>
-    <FlipableCard></FlipableCard>
         <Cards datas={data}/>      
     </div>
   );
