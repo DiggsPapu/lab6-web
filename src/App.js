@@ -61,12 +61,14 @@ const Cards = ({ datas }) => {
     React.useEffect(() => {
       setTimeout(() => {
         const list = datas.values.data.map((value) => (
-        <div style={{
-          height: "400px",
-          width:"200px"
-        }}>
-            <h1>{value.name+":"}</h1>
-           <img src = {value.imageUrl} style={{}}/>
+        <div className="flippable-card-container">
+          <div className="card">
+            <div className="card-front">
+              <h1>{value.name+":"}</h1>
+            <img src = {value.imageUrl} style={{}}/>
+            </div>
+            <div  className="card-back "></div>
+          </div>
         </div>
           // <div>
             // <p>{value.id}</p>
@@ -91,10 +93,7 @@ const Cards = ({ datas }) => {
         {
         cards.map((card, index) =>
         // console.log(index) 
-          <div style={{
-            gridRowStart:"0"+"/"+"0",
-          }}
-          key={index}>{card}</div>
+          <div key={index}>{card}</div>
         )}
       </div>
     );
