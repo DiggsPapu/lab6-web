@@ -1,14 +1,56 @@
 import { SingleCard } from "./Card";
+import { Card } from "./Card";
 import React from 'react';
+import { Component } from "react";
+import axios from 'axios';
 export const Cards = ({ datas }) => {
-      const [cards, setCards] = React.useState([]);
-      React.useEffect(() => {
-        setTimeout(() => {
-          const shuffled_list = Shuffle(datas.values.data);
-          const list = shuffled_list.map((value) => SingleCard(value));
-          setCards(list);
-        }, 200);
-      }, []);
+  const [cards, setCards] = React.useState([]);
+  React.useEffect(() => {
+    setTimeout(() => {
+      const shuffled_list = Shuffle(datas.values.data);
+      const list = shuffled_list.map((value) => SingleCard(value));
+      setCards(list);
+    }, 2000);
+  }, []);
+  return (
+    <div style = {{
+      width: '100%',
+      height: '100%',
+      display: 'grid',
+      gridTemplateColumns: "auto auto auto auto auto",
+      gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto",
+      backgroundSize: 'contain'
+    }}>
+      {
+      cards.map((card, index) =>
+        <div key={index}>{card}</div>
+      )}
+    </div>
+  );
+};
+    export class CardsComponent extends Component{
+      constructor(){
+        super();
+        this.state ={
+          datas: []
+        }
+      }
+      
+    
+     load = () => {
+            axios.get("https://api.disneyapi.dev/characters?page=149")
+              .then(res => {
+                  this.setState({ datas: ShuffleComponent(res.data.data)});
+                  setTimeout(() => {
+                    this.setState({ datas: res.data.data});
+                    this.setState({datas: ShuffleComponent(this.state.datas)});
+                    }, 500)
+              })
+        }
+        componentDidMount() {
+          this.load();
+      }
+    render(){
       return (
         <div style = {{
           width: '100%',
@@ -19,12 +61,43 @@ export const Cards = ({ datas }) => {
           backgroundSize: 'contain'
         }}>
           {
-          cards.map((card, index) =>
-            <div key={index}>{card}</div>
-          )}
+            // console.log(this.state.datas)
+
+          this.state.datas.map((value, index) =>
+          <Card key={index} props={value}/>
+          // console.log(index)
+          )
+        }
         </div>
       );
-    };
+    }
+  };
+  export function ShuffleComponent(temp){
+    let arr = []
+    let vals = []
+        // Select random from api
+        for (let i = 0 ; i < 10 ; i++ ){
+          let j = Math.floor(Math.random() * temp.length);
+          if (!vals.includes(j)){
+            arr[i]= temp[j];
+            vals[vals.length] = j;
+          }
+          else{
+            i--;
+          }    
+        }
+        // Add pair
+        let counter = 0;
+        for (let i = 0 ; i < 10 ; i++ ){
+          arr[i+10]= arr[counter];
+          counter++;
+         }
+        //  shuffle
+        let arr1 = arr.sort(function (){
+          return Math.random()-0.5;
+        })
+        return arr1
+  }
     export function Shuffle(value){
         let vals = []
         let temp = value.slice()
