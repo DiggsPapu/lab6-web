@@ -55,9 +55,7 @@ export const SingleCard = (value)=>{
     constructor(props){
         super(props);
         this.state = {
-            characteristics:[],
-            isLoaded: false,
-            error:null
+            isSelected:false
         }
     }
     handleClick = () =>{

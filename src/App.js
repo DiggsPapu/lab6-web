@@ -92,7 +92,7 @@ export default class App extends React.Component {
   }
   render() {
     const { error, isLoaded, items } = this.state;
-    console.log(items);
+    
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -148,5 +148,26 @@ export function Shuffle(value){
         let arr1 = arr.sort(function (){
           return Math.random()-0.5;
         })
+        for (let k = 0 ; k < arr1.length ; k++ ){
+          if (arr1[k]["films"].length === 0){
+            arr1[k]["films"] = "None"
+          }
+          if (arr1[k]["shortFilms"].length === 0){
+            arr1[k]["shortFilms"] = "None"
+          }
+          if (arr1[k]["tvShows"].length === 0){
+            arr1[k]["tvShows"] = "None"
+          }
+          if (arr1[k]["videoGames"].length === 0){
+            arr1[k]["videoGames"] = "None"
+          }
+          if (arr1[k]["name"].length === 0){
+            arr1[k]["name"] = "None"
+          }
+          if (arr1[k]["imageUrl"].length === 0){
+            arr1[k]["imageUrl"] = "None"
+          }
+        }
+        
         return arr1
       }
