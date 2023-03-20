@@ -23,6 +23,7 @@ export const Cards = ({ datas }) => {
     }}>
       {
       cards.map((card, index) =>
+      
         <div key={index}>{card}</div>
       )}
     </div>

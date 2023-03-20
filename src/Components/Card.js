@@ -51,7 +51,7 @@ export const SingleCard = (value)=>{
     constructor(props){
         super(props);
         this.state = {
-            isSelected:false
+            isSelected:true
         }
     }
     handleClick = () =>{
