@@ -63,7 +63,7 @@
   .flip-card {
     background-color: transparent;
     width: 200px;
-    height: 400px;
+    height: 500px;
     perspective: 1000px;
     padding: 5px;
   }
@@ -90,7 +90,7 @@
     backface-visibility: hidden;
     
     font-family: Montserrat;
-    font-weight: 10;
+    font-weight: 7;
     font-size: 20px;
   }
   
@@ -103,4 +103,9 @@
     background-color: #73d0ff;
     color: white;
     transform: rotateY(180deg);
+  }
+  li{
+    text-align: left;
+    font-weight: 4;
+    font-size: 15px;
   }

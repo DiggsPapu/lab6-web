@@ -55,15 +55,74 @@ import "./Components/Card.css"
 //       </div>
 //     );
 //   };
-function Card(value){
+const SingleCard = (value)=>{
+  if (value.films.length === 0){
+    value.films = "None"
+  }
+  if (value.shortFilms.length === 0){
+    value.shortFilms = "None"
+  }
+  if (value.tvShows.length === 0){
+    value.tvShows = "None"
+  }
+  if (value.videoGames.length === 0){
+    value.videoGames = "None"
+  }
   return(
     <div className="flip-card">
       <div className="flip-card-inner">
         <div className="card-front"> 
         
-        <img src = {value.imageUrl}/>
-          <h1>{value.name}</h1>
-          
+        <img style={{
+          width: '200px',
+          height: '200px'
+        }} src = {value.imageUrl}/>
+        <h1>{value.name}</h1>
+        <ul>
+          <li>{"Films:\n"+value.films}</li>
+          <li>{"ShortFilms:\n"+value.shortFilms}</li>
+          <li>{"TvShows:\n"+value.tvShows}</li> 
+          <li>{"VideoGames:\n"+value.videoGames}</li>
+        </ul>
+        </div>
+        <div className="card-back">
+        <h1>Disney</h1> 
+          <p>Architect & Engineer</p> 
+          <p>We love that guy</p>  
+        </div>
+      </div>
+    </div>
+  )
+}
+function Card(value){
+  if (value.films.length === 0){
+    value.films = "None"
+  }
+  if (value.shortFilms.length === 0){
+    value.shortFilms = "None"
+  }
+  if (value.tvShows.length === 0){
+    value.tvShows = "None"
+  }
+  if (value.videoGames.length === 0){
+    value.videoGames = "None"
+  }
+  return(
+    <div className="flip-card">
+      <div className="flip-card-inner">
+        <div className="card-front"> 
+        
+        <img style={{
+          width: '200px',
+          height: '200px'
+        }} src = {value.imageUrl}/>
+        <h1>{value.name}</h1>
+        <ul>
+          <li>{"Films:\n"+value.films}</li>
+          <li>{"ShortFilms:\n"+value.shortFilms}</li>
+          <li>{"TvShows:\n"+value.tvShows}</li> 
+          <li>{"VideoGames:\n"+value.videoGames}</li>
+        </ul>
         </div>
         <div className="card-back">
         <h1>Disney</h1> 
@@ -75,36 +134,38 @@ function Card(value){
   )
 }
 function Shuffle(value){
+  let vals = []
   let temp = value.slice()
-  let temp2 = value.slice()
   let arr = []
-  temp2.length = temp2.length*2
-  // console.log("\nTemp1:"+temp.length+"\nTemp2:"+temp2.length)
-  // for (let i = 0 ; i < 20; i++){
-  //   let j = Math.floor(Math.random() * (i + 1));
-  //   [temp[i], arr[j]] = [temp[j], temp[i]];
-  // }
-  for (let i = 0 ; i < 10 ; i++ ){
+  // Select random from api
+  for (let i = 0 ; i < 5 ; i++ ){
     let j = Math.floor(Math.random() * temp.length);
-    arr[i]= temp[j]
+    if (!vals.includes(j)){
+      arr[i]= temp[j];
+      vals[vals.length] = j;
+    }
+    else{
+      i--;
+    }    
   }
+  // Add pair
   let counter = 0;
-  for (let i = 0 ; i < 10 ; i++ ){
-    arr[i+25]= arr[counter];
+  for (let i = 0 ; i < 5 ; i++ ){
+    arr[i+5]= arr[counter];
     counter++;
    }
- for (let i = 0 ; i < 5; i++){
-    let j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr
+  //  shuffle
+  let arr1 = arr.sort(function (){
+    return Math.random()-0.5;
+  })
+  return arr1
 }
 const Cards = ({ datas }) => {
     const [cards, setCards] = React.useState([]);
     React.useEffect(() => {
       setTimeout(() => {
         const shuffled_list = Shuffle(datas.values.data);
-        const list = shuffled_list.map((value) => Card(value));
+        const list = shuffled_list.map((value) => SingleCard(value));
         setCards(list);
       }, 1000);
     }, []);
@@ -155,8 +216,8 @@ const App = () => {
   return (
     <div style={{
         background: `url("https://i.etsystatic.com/10842635/r/il/6d88a8/3717710901/il_570xN.3717710901_4eg6.jpg") no-repeat center fixed`,
-        width: '1280px',
-        height: '630px',
+        width: '100%',
+        height: '100%',
         display: 'grid',
         gridColumn: 'repeat(4,100px)',
         gridRow: 'repeat(10,100px)',
