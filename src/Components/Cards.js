@@ -28,48 +28,60 @@ export const Cards = ({ datas }) => {
     </div>
   );
 };
+
     export class CardsComponent extends Component{
       constructor(){
         super();
         this.state ={
+          error:null,
+          isLoaded:false,
           datas: []
         }
       }
-      
-    
-     load = () => {
-            axios.get("https://api.disneyapi.dev/characters?page=149")
-              .then(res => {
-                  this.setState({ datas: ShuffleComponent(res.data.data)});
-                  setTimeout(() => {
-                    this.setState({ datas: res.data.data});
-                    this.setState({datas: ShuffleComponent(this.state.datas)});
-                    }, 500)
-              })
+      componentDidMount(){
+        fetch("https://api.disneyapi.dev/characters?page=8")
+        .then((response) => response.json())
+        .then((data) => {
+          this.setState({
+            isLoaded:true,
+            datas: data.data
+          });
+        });
+        (error) => {
+          this.setState({
+            isLoaded: true,
+            error
+          })
         }
-        componentDidMount() {
-          this.load();
+        
       }
     render(){
-      return (
-        <div style = {{
-          width: '100%',
-          height: '100%',
-          display: 'grid',
-          gridTemplateColumns: "auto auto auto auto auto",
-          gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto",
-          backgroundSize: 'contain'
-        }}>
+      const { error, isLoaded, characters } = this.state;
+      if(error){
+        return <div>Error: {error.message}</div>
+      }
+      else if (!isLoaded){
+        return <div>Loading...</div>;
+      }
+      else{
+        return (
+          <div style = {{
+            width: '100%',
+            height: '100%',
+            display: 'grid',
+            gridTemplateColumns: "auto auto auto auto auto",
+            gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto",
+            backgroundSize: 'contain'
+          }}>
           {
-            // console.log(this.state.datas)
-
-          this.state.datas.map((value, index) =>
-          <Card key={index} props={value}/>
-          // console.log(index)
-          )
-        }
-        </div>
-      );
+            characters.map((character) => (
+              console.log(character)
+            ))
+          }
+          </div>
+        );
+      }
+      
     }
   };
   export function ShuffleComponent(temp){
