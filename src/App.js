@@ -1,8 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import "./Components/Card.css"
-import { SingleCard } from "./Components/Card";
+import "./Components/Card.css";
 import { Cards } from "./Components/Cards";
 const UseFetch = (url) =>{
     var [data] = useState({values:null})
@@ -27,8 +26,6 @@ const App = () => {
     console.log(url)
     var values = UseFetch(url)
     const [data] = useState(values)
-    // This to print update
-    setTimeout(()=>{console.log(data)},1000);
   return (
     <div style={{
         background: `url("https://media.disneylandparis.com/d4th/en-usd/images/n037009_2029mar16_world_30-anniversary-fireworks-castle_16-9_tcm1861-233244.jpg") no-repeat center fixed`,

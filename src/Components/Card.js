@@ -1,5 +1,6 @@
 import React from "react";
 export const SingleCard = (value)=>{
+    
     if (value.films.length === 0){
       value.films = "None"
     }

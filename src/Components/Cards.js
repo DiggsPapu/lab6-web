@@ -7,7 +7,7 @@ export const Cards = ({ datas }) => {
           const shuffled_list = Shuffle(datas.values.data);
           const list = shuffled_list.map((value) => SingleCard(value));
           setCards(list);
-        }, 1000);
+        }, 200);
       }, []);
       return (
         <div style = {{
