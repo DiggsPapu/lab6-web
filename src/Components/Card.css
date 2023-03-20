@@ -10,9 +10,7 @@
     /* Sizing */
     height: 100%;
     width: 100%;
-    
     transform-style: preserve-3d;
-  
     /* Content Alignment */
     position: relative;
   
@@ -78,8 +76,8 @@
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   }
   
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
+  .flip-card:hover {
+    transform: rotateY(0deg);
   }
   
   .flip-card-front, .flip-card-back {

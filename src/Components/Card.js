@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import {CSSTransition} from "react-transition-group";
+import "./Transition.css";
 import { Component } from "react";
 export const SingleCard = (value)=>{
     if (value.films.length === 0){
@@ -43,12 +45,6 @@ export const SingleCard = (value)=>{
           </div>
         </div>
       </div>
-    // <Card props={value}>
-    //     {
-    //     console.log(value)
-    // }
-    // </Card>
-    
     )
   }
   export  class Card extends Component{
@@ -59,12 +55,16 @@ export const SingleCard = (value)=>{
         }
     }
     handleClick = () =>{
-        console.log("It has been clicked: "+this.props.props.name)
+        this.setState({isSelected:!this.state.isSelected})
     }
     render(){
         return(
-            <div className="flip-card" onClick={this.handleClick}>
-                <div className="flip-card-inner">
+            <div className="flip-card" >
+               <CSSTransition
+               in = {this.state.isSelected}
+               timeout = {300}
+               classNames = "flip">
+               <div className="flip-card-inner" onClick={this.handleClick}>
                 <div className="card-back">
                 <img style={{
                     width: '200px',
@@ -85,6 +85,7 @@ export const SingleCard = (value)=>{
                     }}></img></figure>
                 </div>
                 </div>
+               </CSSTransition>
             </div>
         )
     }

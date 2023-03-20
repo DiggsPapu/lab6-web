@@ -68,7 +68,6 @@ export default class App extends React.Component {
       items: []
     };
   }
-
   componentDidMount() {
     fetch("https://api.disneyapi.dev/characters?page=8")
       .then(res => res.json())
@@ -168,6 +167,5 @@ export function Shuffle(value){
             arr1[k]["imageUrl"] = "None"
           }
         }
-        
         return arr1
       }
