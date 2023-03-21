@@ -65,17 +65,18 @@ export default class App extends React.Component {
     this.state = {
       error: null,
       isLoaded: false,
-      items: []
+      items: [],
     };
   }
   componentDidMount() {
-    fetch("https://api.disneyapi.dev/characters?page=8")
+    fetch("https://api.disneyapi.dev/characters?page=100")
       .then(res => res.json())
       .then(
         (result) => {
           this.setState({
             isLoaded: true,
-            items: Shuffle(result.data)
+            items: Shuffle(result.data),
+            pairs:getPairs(this.state.items)
           });
         },
         // Note: it's important to handle errors here
@@ -90,8 +91,8 @@ export default class App extends React.Component {
       )
   }
   render() {
-    const { error, isLoaded, items } = this.state;
-    
+    console.log(this.state.items)
+    const { error, isLoaded, items, pairs } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -111,10 +112,10 @@ export default class App extends React.Component {
             height: '100%',
             display: 'grid',
             gridTemplateColumns: "auto auto auto auto auto",
-            gridTemplateRows: "auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto",
+            gridTemplateRows: "auto auto auto auto auto",
             backgroundSize: 'contain'
           }}>
-            {items.map((item, index) => (
+            {items[0].map((item, index) => (
                 <Card key={index} props= {item}/>
               ))}
           </div>        
@@ -167,5 +168,18 @@ export function Shuffle(value){
             arr1[k]["imageUrl"] = "None"
           }
         }
-        return arr1
+        
+        return [arr1, getPairs(arr1)]
       }
+export function getPairs(list){
+  var list2 = list
+  var indexes = []
+  for (let k = 0 ; k < list2.length ; k++ ){
+    for (let n = k+1; n < list2.length; n++){
+      if (list2[k]["name"]===list2[n]["name"] && indexes.includes(k)===false){
+        indexes[indexes.length] = [k,n]
+      }
+    }
+  }
+  return indexes;
+}

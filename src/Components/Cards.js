@@ -23,7 +23,6 @@ export const Cards = ({ datas }) => {
     }}>
       {
       cards.map((card, index) =>
-      
         <div key={index}>{card}</div>
       )}
     </div>
@@ -40,7 +39,7 @@ export const Cards = ({ datas }) => {
         }
       }
       componentDidMount(){
-        fetch("https://api.disneyapi.dev/characters?page=8")
+        fetch("https://api.disneyapi.dev/characters?page=50")
         .then((response) => response.json())
         .then((data) => {
           this.setState({
