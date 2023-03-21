@@ -51,11 +51,18 @@ export const SingleCard = (value)=>{
     constructor(props){
         super(props);
         this.state = {
-            isSelected:true
+            isSelected:true,
+            Done:false
+
         }
     }
     handleClick = () =>{
-        this.setState({isSelected:!this.state.isSelected})
+        if (this.state.Done){
+            this.setState({isSelected:false})
+        }
+        else{
+            this.setState({isSelected:!this.state.isSelected})
+        }
     }
     render(){
         return(
