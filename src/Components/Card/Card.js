@@ -1,10 +1,10 @@
 import React from "react";
 import "./Card.css";
-const Card = ({name, films, shortFilms, tvShows, videoGames, img, active }) =>{
+const Card = ({name, films, shortFilms, tvShows, videoGames, img, visible, finished, onClick }) =>{
     return (
-        <span className="card">
+        <span className="card" onClick={onClick}>
         {
-            active?
+            visible||finished?
             <div className='card-front'>
             <img src={img}></img>
             <h1>{name}</h1>

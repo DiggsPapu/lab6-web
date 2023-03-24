@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./CardList.css"
 import Card from "../Card/Card";
 const CardList = () => {
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [error, setError] = useState(null)
+  const [isLoaded, setIsLoaded] = useState(false)
+  const [items, setItems] = useState([])
+  const [visibleItems, setVisibleItems] = useState([])
+  const [finishedItems, setFinishedItems] = useState([])
   useEffect(() => {
     fetch("https://api.disneyapi.dev/characters?page=100")
     .then( (res) => res.json() )
@@ -19,14 +21,43 @@ const CardList = () => {
     })    
   }, []);
   if (isLoaded && error===null){
-    {items[0].map((item) => (
-      console.log(item)
-    ))}
     return (
       <div>
         <div className="card-list">
       {items[0].map((item, index) => (
-          <Card key={index} name={item.name} shortFilms={item.shortFilms} tvShows={item.tvShows} videoGames={item.videoGames} films={item.films} img={item.imageUrl} active={true}/>
+          <Card key={index} 
+            name={item.name} 
+            shortFilms={item.shortFilms} 
+            tvShows={item.tvShows} 
+            videoGames={item.videoGames} 
+            films={item.films} 
+            img={item.imageUrl} 
+            visible={visibleItems.includes(index)||finishedItems.includes(index)?true:false}
+            onClick={() => {
+              if (!finishedItems.includes(index)) {
+                switch (visibleItems.length) {
+                  case 0:
+                    setVisibleItems([index]);
+                    break;
+                  case 1:
+                    if (visibleItems[0] !== index) {
+                      setVisibleItems(visibleItems.concat(index));
+                      if(visibleItems[0]===items[1][index]){
+                        finishedItems[index]=index
+                        finishedItems[items[1][index]]=items[1][index]
+                      }
+                      else{setTimeout(() => {setVisibleItems([])}, 600)}
+                    }
+                    break
+                  case 2:
+                    setVisibleItems([index]);
+                    break;
+                  default:
+                    setVisibleItems([]);
+                }
+              }
+            }}
+          />
         ))}
         </div> 
         {/* <Card active={false}></Card> */}
@@ -91,9 +122,22 @@ var indexes = []
 for (let k = 0 ; k < list2.length ; k++ ){
 for (let n = k+1; n < list2.length; n++){
 if (list2[k]["name"]===list2[n]["name"] && indexes.includes(k)===false){
-  indexes[indexes.length] = [k,n]
+  indexes[k] = n
+  indexes[n] = k
 }
 }
 }
 return indexes;
 }
+const checkItems = (firstIndex, secondIndex,items) => {
+  if (
+    firstIndex !== secondIndex &&
+    items[0][firstIndex].imageUrl === items[0][secondIndex].imageUrl
+  ) {
+    setFinishedItems([...finishedItems, firstIndex, secondIndex]);
+  } else {
+    setTimeout(() => {
+      setVisibleItems([]);
+    }, 600);
+  }
+};
