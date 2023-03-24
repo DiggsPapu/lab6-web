@@ -1,5 +1,5 @@
-import { SingleCard } from "./Card";
-import { Card } from "./Card";
+import { SingleCard } from "./Card/Card";
+import { Card } from "./Card/Card";
 import React from 'react';
 import { Component } from "react";
 import axios from 'axios';
