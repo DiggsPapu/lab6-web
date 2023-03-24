@@ -134,15 +134,3 @@ if (list2[k]["name"]===list2[n]["name"] && indexes.includes(k)===false){
 }
 return indexes;
 }
-const checkItems = (firstIndex, secondIndex,items) => {
-  if (
-    firstIndex !== secondIndex &&
-    items[0][firstIndex].imageUrl === items[0][secondIndex].imageUrl
-  ) {
-    setFinishedItems([...finishedItems, firstIndex, secondIndex]);
-  } else {
-    setTimeout(() => {
-      setVisibleItems([]);
-    }, 600);
-  }
-};
