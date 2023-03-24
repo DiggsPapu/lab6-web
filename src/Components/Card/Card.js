@@ -7,7 +7,7 @@ const Card = ({name, films, shortFilms, tvShows, videoGames, img, visible, finis
             visible||finished?
             <div className='card-front'>
             <img src={img}></img>
-            <h1>{name}</h1>
+            <h1>{name}</h1> 
             <ul>
                 <li>Films:{films}</li>
                 <li>Shortfilms: {shortFilms}</li>
@@ -17,7 +17,6 @@ const Card = ({name, films, shortFilms, tvShows, videoGames, img, visible, finis
             </div>
             :
             <div className='card-back'>
-                <img src='https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg'></img>
             </div>
         }
         </span>

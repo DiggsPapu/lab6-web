@@ -7,6 +7,8 @@ const CardList = () => {
   const [items, setItems] = useState([])
   const [visibleItems, setVisibleItems] = useState([])
   const [finishedItems, setFinishedItems] = useState([])
+  const [score, setScore] =useState(0)
+  const [moves, setMoves] =useState(0)
   useEffect(() => {
     fetch("https://api.disneyapi.dev/characters?page=100")
     .then( (res) => res.json() )
@@ -23,6 +25,7 @@ const CardList = () => {
   if (isLoaded && error===null){
     return (
       <div>
+      <p>Score:{score}  Moves:{moves}</p>
         <div className="card-list">
       {items[0].map((item, index) => (
           <Card key={index} 
@@ -37,7 +40,8 @@ const CardList = () => {
               if (!finishedItems.includes(index)) {
                 switch (visibleItems.length) {
                   case 0:
-                    setVisibleItems([index]);
+                    setVisibleItems([index])
+                    setMoves(moves+1) 
                     break;
                   case 1:
                     if (visibleItems[0] !== index) {
@@ -45,12 +49,14 @@ const CardList = () => {
                       if(visibleItems[0]===items[1][index]){
                         finishedItems[index]=index
                         finishedItems[items[1][index]]=items[1][index]
+                        setScore(score+1)
                       }
                       else{setTimeout(() => {setVisibleItems([])}, 600)}
                     }
                     break
                   case 2:
-                    setVisibleItems([index]);
+                    setVisibleItems([index])
+                    setMoves(moves+1) 
                     break;
                   default:
                     setVisibleItems([]);
@@ -60,7 +66,6 @@ const CardList = () => {
           />
         ))}
         </div> 
-        {/* <Card active={false}></Card> */}
       </div>   
     )
   }
