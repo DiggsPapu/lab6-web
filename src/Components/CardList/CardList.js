@@ -25,7 +25,8 @@ const CardList = () => {
   if (isLoaded && error===null){
     return (
       <div className="card-list">
-      <h1 style={{fontSize:"25px",gridArea:"6/2",color:"blue"}}>SCORE: {score}</h1>
+      <div style={{fontSize:"25px",gridArea:"7/2",color:"blue"}} hidden={score===10?"":"hidden"}>YOU WON!!!!!!!!!!!!!!!!!</div>
+      <h1 style={{fontSize:"25px",gridArea:"6/2",color:"blue"}}>SCORE: {score*10}</h1>
       <h1 style={{fontSize:"25px",gridArea:"6/4",color:"blue"}}>MOVES: {moves}</h1>
       {items[0].map((item, index) => (
           <Card key={index} 
@@ -51,7 +52,7 @@ const CardList = () => {
                         finishedItems[items[1][index]]=items[1][index]
                         setScore(score+1)
                       }
-                      else{setTimeout(() => {setVisibleItems([])}, 2000)}
+                      else{setTimeout(() => {setVisibleItems([])}, 1000)}
                     }
                     break
                   case 2:

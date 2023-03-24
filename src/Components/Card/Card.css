@@ -31,11 +31,11 @@
   }
   .card-front {
     background-color: #73d0ff;
-    transition: all ease-in 1s;
+    transition: all ease-in 0.5s;
   }
   .card-back {
     background-color: transparent;
-    transition: all ease-in-out 1s;
+    transition: all ease-in-out 0.5s;
     transform: rotateY(360deg);
   }
   img{
