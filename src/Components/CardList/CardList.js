@@ -10,7 +10,7 @@ const CardList = () => {
   const [score, setScore] =useState(0)
   const [moves, setMoves] =useState(0)
   useEffect(() => {
-    fetch("https://api.disneyapi.dev/characters?page=100")
+    fetch("https://api.disneyapi.dev/character")
     .then( (res) => res.json() )
     .then( (res) =>
     {
