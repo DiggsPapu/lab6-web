@@ -3,15 +3,16 @@
     /* Sizing */
     height: 250px;
     width: 100px;
-    margin:10px;
+    margin-top: 5px;
+    margin-left: 5px;
     perspective: 1000px;
     transform-style: preserve-3d;
   }
   .card-front,
   .card-back {
     /* Sizing */
-    height: 250px;
-    width: 100px;
+    height: 200px;
+    width: 200px;
     /* Alignment */
     position: absolute;
     /* Content Alignment */
@@ -48,6 +49,10 @@
     margin: 0;
     font-size: 15px;
     display: inline-block;
+  }
+  p{
+    margin: 0px;
+    font-size: 10px;
   }
   ul{
     

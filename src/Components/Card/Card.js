@@ -1,6 +1,6 @@
 import React from "react";
 import "./Card.css";
-const Card = ({name, films, shortFilms, tvShows, videoGames, img, visible, finished, onClick }) =>{
+const Card = ({name, data, img, visible, finished, onClick }) =>{
     return (
         <span className="card" onClick={onClick}>
         {
@@ -8,16 +8,11 @@ const Card = ({name, films, shortFilms, tvShows, videoGames, img, visible, finis
             <div className='card-front'>
             <img src={img}></img>
             <h1>{name}</h1> 
-            <ul>
-                <li>Films:{films}</li>
-                <li>Shortfilms: {shortFilms}</li>
-                <li>TvShows:{tvShows}</li>
-                <li>VideoGames:{videoGames}</li>
-            </ul>
+            <p>{data}</p>
             </div>
             :
             <div className='card-back'>
-                <img src='https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg'></img>
+                <img src='https://bcassetcdn.com/public/blog/wp-content/uploads/2019/11/20170116/Top-10-Best-Logo-Designs-to-Inspire-You-DesignCrowd-blog.jpg'></img>
             </div>
         }
         </span>
